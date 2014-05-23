@@ -473,14 +473,14 @@ License() { # Used in Credits()
     # Displays license if present or runs PrepareLicense && then display it..
     clear
     if [ -f "$GAMEDIR/LICENSE" ]; then
-	"$PAGER" "$GAMEDIR/LICENSE" # Some like "more" than "less" (as pager) :)
+	less "$GAMEDIR/LICENSE"
     else
 	echo "License file currently missing in $GAMEDIR/ !"
 	echo -n "To DL licenses, about 60kB, type YES (requires internet access): " 
 	read "DL_LICENSE_OPT"
 	case "$DL_LICENSE_OPT" in
 	    YES ) 
-		PrepareLicense && "$PAGER" "$GAMEDIR/LICENSE" ;;
+		PrepareLicense && less "$GAMEDIR/LICENSE" ;;
 	    * ) 
 		echo -e "
 Code License:\t<http://www.gnu.org/licenses/gpl-3.0.txt>
@@ -493,32 +493,30 @@ Press any key to go back to main menu!";
 
 
 ##########   FOR RUNTIME BLOCK (LICENSE)   ##########   
-# Parse CLI arguments if any # TODO use getopts ?
+# Parse CLI arguments
 case "$1" in
     --announce )
 	Announce ;;
-    --h | --help )
+    -h | --help )
 	echo "Run the game BACK IN A MINUTE with '--play' or 'p' arguments to play!"
 	echo "For usage: run biamin --usage"
 	echo "Current dir for game files: $GAMEDIR/"
 	echo "Change at runtime or on line 10 in the CONFIGURATION of the script."
 	echo "You are currently running the NON-ASCII (GPL-only) version."
 	exit 0;;
-    --i | --install )
+    -i | --install )
 	CreateBiaminLauncher ;
 	exit 0;;
     --map )
 	read -n1 -p "Create custom map template? [Y/N] " CUSTOM_MAP_PROMPT
-	if [ "$CUSTOM_MAP_PROMPT" = "y" ] || [ "$CUSTOM_MAP_PROMPT" = "Y" ]; then
-	    echo "Creating custom map template.."
-	    MapCreateCustom
-	else
-	    echo "Not doing anything! Quitting.."
-	fi
+	case "$CUSTOM_MAP_PROMPT" in
+		y | Y) echo -e "\nCreating custom map template.." && MapCreateCustom ;;
+		*)     echo -e "\nNot doing anything! Quitting.."
+	esac
 	exit 0 ;;
-    --play | -p | p )
+    -p | --play | p )
 	echo "Launching Back in a Minute.." ;;
-    --v | --version )
+    -v | --version )
 	echo -e "BACK IN A MINUTE VERSION $VERSION Copyright (C) 2014 Sigg3.net\n"
 	echo "Game SHELL CODE released under GNU GPL version 3 (GPLv3)."
 	echo "This is free software: you are free to change and redistribute it."
@@ -530,12 +528,12 @@ case "$1" in
     --usage | * )
 	echo "Usage: biamin or ./biamin.sh"
 	echo "  (NO ARGUMENTS)      display this usage text and exit"
-	echo "  --play or p         PLAY the game \"Back in a minute\""
-	echo "  --announce          DISPLAY an adventure summary for social media and exit"
-	echo "  --install           ADD biamin.sh to your .bashrc file"
-	echo "  --map               CREATE custom map template with instructions and exit"
-	echo "  --help              display help text and exit"
-	echo "  --usage             display this usage text and exit"
-	echo "  --version           display version and licensing info and exit"
+	echo "  -p --play or p      PLAY the game \"Back in a minute\""
+	echo "     --announce       DISPLAY an adventure summary for social media and exit"
+	echo "  -i --install        ADD biamin.sh to your .bashrc file"
+	echo "     --map            CREATE custom map template with instructions and exit"
+	echo "     --help           display help text and exit"
+	echo "     --usage          display this usage text and exit"
+	echo "  -v --version        display version and licensing info and exit"
 	exit 0;;
 esac
