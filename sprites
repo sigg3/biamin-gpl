@@ -1,0 +1,541 @@
+# These are the biamin GFX headers for the GPL-only, non ASCII version
+# They are essentially placeholders for contributed GPL licensed ASCII art..
+# The regular version has ASCII artwork licensed under CC BY-NC-SA 4.0
+# Homepage URL: <http://www.sigg3.net/biamin/>
+
+##########   FOR UPPER BLOCK   ##########   
+# Back In A Minute GPL ONLY by Sigg3.net (C) 2014
+# Code is GNU GPLv3
+VERSION="1.3.7 non-ASCII" 
+
+
+##########   FOR THE GFX BLOCK   ##########   
+# Horizontal ruler used almost everywhere in the game
+HR="- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ "
+
+GX_Banner() {
+    clear
+    cat <<"EOT"
+                       B A C K   I N   A   M I N U T E
+                       
+                              NON-ASCII VERSION
+
+                         a simple bash adventure game
+
+                       Sigg3.net (C) 2014 - GNU GPL v.3
+
+EOT
+    echo "$HR"
+}
+
+GX_Credits() {
+    clear
+    cat <<"EOT"
+                       B A C K   I N   A   M I N U T E
+                        
+   Back in a minute is an adventure game with 4 playable races, 6 enemies,
+   8 items and 6 scenarios spread across the 270 sections of the world map.
+   Biamin saves character sheets between sessions and keeps a highscore!
+   The game supports custom maps too! See --help or --usage for information.
+EOT
+    echo -e "\n   Game directory: $GAMEDIR/\n"
+    cat <<"EOT"
+   This timekiller's written entirely in BASH. It was intended for sysadmins
+   but please note that it isn't console-friendly and it looks best in 80x24
+   terminal emulators (white on black). Make sure it's a window you can close.
+      
+   You are currently playing the non-ASCII version of Back in a minute.
+   BASH code (C) Sigg3.net GNU GPL Version 3 2014
+
+EOT
+    echo "   Visit the Back in a minute website at <$WEBURL>"
+    echo "   for updates, feedback and to report bugs. Thank you."
+    echo "$HR"
+}
+
+GX_HowTo() {
+    clear
+    cat <<"EOT"
+                       B A C K   I N   A   M I N U T E
+                                 HOW TO PLAY
+
+   Go to Main Menu and hit (P)lay and enter the NAME of the character you want
+   to create or whose character sheet you want to load (case-sensitive).
+   You enter the World of Back in a Minute. The first sector is Home.
+   
+   Each sector gives you these action alternatives:
+   (C)haracter sheet: Toggle Character Sheet
+   (R)est: Sleep to gain health points
+   (M)ap and travel: Toggle Map to find yourself, items and to travel
+   (Q)uit: Save current status and quit the world of Back in a Minute
+   Use W, A, S, D keys to travel North, West, South or East directly.
+      
+   Travelling and resting involves the risk of being attacked by the creatures
+   inhabiting the different scenarios. Some places are safer than others.
+EOT
+    echo "   For more information please visit <$WEBURL>"
+    echo "$HR"
+}
+
+GX_HighScore() {
+    clear
+    cat <<"EOT"
+                       B A C K   I N   A   M I N U T E
+                                 HIGHSCORE
+EOT
+    echo "$HR"
+}
+
+GX_LoadGame() {
+    clear
+    cat << "EOT"
+                       B A C K   I N   A   M I N U T E
+                                 LOAD GAME
+EOT
+    echo "$HR"
+}
+
+GX_CharSheet() {
+    clear
+    cat <<"EOT"
+                       B A C K   I N   A   M I N U T E
+                               CHARACTER SHEET
+EOT
+    echo "$HR"
+}
+
+GX_Death() {
+    clear
+    cat <<"EOT"
+                                     DEATH!
+                                  
+                    You are a stiff, pushing up the daisies,
+                            you are irrevocably dead!
+                  
+                             Better luck next time!
+
+EOT
+    echo "$HR"
+}
+
+GX_Intro() {
+    clear
+    cat <<"EOT"
+                 YOU WAKE UP TO A VAST AND UNFAMILIAR LANDSCAPE!
+
+       Use the MAP to move around, and REST to regain health points
+       
+       Home, towns and the castle are safer than the open road.
+       Don't venture far into the wilderness and mountains.
+       You are not alone..
+       
+EOT
+    echo "$HR"
+}
+
+GX_Races() {
+    clear
+    cat <<"EOT"
+
+                               CHARACTER RACES:
+
+      1. MAN            2. ELF              3. DWARF            4. HOBBIT
+ 
+   Healing:  3/6      Healing:  4/6       Healing:  2/6        Healing:  4/6   
+   Strength: 3/6      Strength: 3/6       Strength: 5/6        Strength: 1/6
+   Accuracy: 3/6      Accuracy: 4/6       Accuracy: 3/6        Accuracy: 4/6
+   Flee:     3/6      Flee:     1/6       Flee:     2/6        Flee:     3/6
+   
+   
+   Dice rolls on each turn. Accuracy also initiative. Healing during resting.
+
+EOT
+    echo "$HR"
+}
+
+GX_Castle() {
+    clear
+    cat <<"EOT"
+                                OLDBURG CASTLE
+                                
+                 Welcome to the Home of the King, the Royal Court
+                           and other silly persons.
+
+EOT
+    echo "$HR"
+}
+
+GX_Town() {
+    clear
+    cat <<"EOT"
+                     YOU HAVE REACHED A PEACEFUL LITTLE TOWN
+
+          A hot bath, warm ale and a cozy bed awaits the weary traveller
+
+EOT
+    echo "$HR"
+}
+
+GX_Forest() {
+    clear
+    cat <<"EOT"
+                              YOU'RE IN THE WOODS
+                            
+                   It feels like something is watching you...
+
+EOT
+    echo "$HR"
+}
+
+GX_Mountains() {
+    clear
+    cat <<"EOT"
+                        YOU'RE TRAVELLING IN THE MOUNTAINS
+                   
+               The calls of the wilderness turn your blood to ice!
+
+EOT
+    echo "$HR"
+}
+
+GX_Home() {
+    clear
+    cat <<"EOT"
+                              MY HOME IS MY CASTLE
+
+                      You are safe here, and fully healed.
+
+EOT
+    echo "$HR"
+}
+
+GX_Road() {
+    clear
+    cat <<"EOT"
+                                ON THE ROAD AGAIN
+
+             The roads are safer than the woods, but beware of robbers!
+
+EOT
+    echo "$HR"
+}
+
+GX_Rest() {
+    clear
+    cat <<"EOT"
+                      YOU TRY TO GET SOME MUCH NEEDED REST
+                  
+EOT
+    echo "$HR"
+}
+
+GX_Monster_chthulu() {
+    clear
+    cat <<"EOT"
+                     THE WRATH OF MIGHTY CHTHULU IS UPON YOU
+                
+EOT
+    echo "$HR"
+}
+
+GX_Monster_orc() {
+    clear
+    cat <<"EOT"
+                     AN ANGRY ORC APPEARS, BLOCKING YOUR WAY!
+            
+                          "Prepare to die", it growls.
+
+EOT
+    echo "$HR"
+}
+
+GX_Monster_varg() {
+    clear
+    cat <<"EOT"
+                          YOU ENCOUNTER A TERRIBLE VARG!
+                    
+                                 It looks hungry.
+
+EOT
+    echo "$HR"
+}
+
+GX_Monster_mage() {
+    clear
+    cat <<"EOT"
+                        A FIERCE MAGE STANDS IN YOUR WAY!
+                     
+               Before you know it, he begins his evil incantations..
+         
+                          "Lorem ipsum dolor sit amet..."
+
+EOT
+    echo "$HR"
+}
+
+GX_Monster_goblin() {
+    clear
+    cat <<"EOT"
+                              A GOBLIN JUMPS YOU!
+        
+                         He raises his club to attack..
+    
+EOT
+    echo "$HR"
+}
+
+GX_Monster_bandit() {
+    clear
+    cat <<"EOT"
+                   YOU ARE AMBUSHED BY A LOWLIFE CRIMINAL!
+                 
+           "Hand over your expensive stuffs, puny poncer, or have your
+           skull cracked open by the mighty club!"
+
+EOT
+    echo "$HR"
+}
+
+GX_Item0() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                                 Gift of Sight
+
+    You give aid to an old woman, carry her firewood and water from the
+     stream, and after a few days she reveals herself as a White Witch!
+	
+     She gives you a blessing and the Gift of Sight in return for your help.
+     "The Gift of Sight," she says, "will aide you as you aided me."
+
+     Look for a ~ symbol in your map to discover new items in your travels.
+     However, from the 7 remaining items only 1 is made visible at a time.
+
+EOT
+    echo "$HR"
+}
+
+GX_Item1() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                             Emerald of Narcolepsy
+
+     You encounter a strange merchant from east of all maps who joins you
+     for a stretch of road. He is a likeable fellow, so when he asks if he
+     could share a campfire with you and finally get some much needed rest in
+     these strange lands, you comply.
+
+     The following day he presents you with a brilliant emerald that he says
+     will help you sleep whenever you need to get some rest. Or at least
+     fetch you a good price at the market. Then you bid each other farewell.
+
+     +1 Healing, Chance of Healing Sleep when you are resting.
+	
+EOT
+    echo "$HR"
+}
+
+GX_Item2() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                                Guardian Angel
+
+     You rescue a magical fairy caught in a cobweb, and in return she
+     promises to come to your aid when you are caught in a similar bind.
+
+     +5 Health in Death if criticality is less than or equal to -5
+
+EOT
+    echo "$HR"
+}
+
+GX_Item3() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                               Fast Magic Boots
+
+     You are taken captive by a cunning gnome with magic boots, holding you
+     with a spell that can only be broken by guessing his riddles.
+     After a day and a night in captivity you decide to counter his riddles
+     with one of your own: "What Creature of the Forest is terribly Red and
+     Whiny, and Nothing Else without the Shiny?"
+     
+     The gnome ponders to and fro, talking to himself and spitting, as he gets
+     more and more agitated. At last, furious, he demands "Show me!" and 
+     releases you from the spell. Before he knows it you've stripped off his
+     boots and are running away, magically quicker than your normal pace.
+
+     +1 Flee
+
+EOT
+    echo "$HR"
+}
+
+GX_Item4() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                             Quick Rabbit Reaction
+
+     Having spent quite a few days and nights out in the open, you have grown
+     accustomed to sleeping with one eye open and quickly react to the dangers
+     of the forests, roads and mountains in the old world, that seek every
+     opportunity to best you.
+
+     Observing the ancient Way of the Rabbit, you find yourself reacting more
+     quickly to any approaching danger, whether it be day or night.
+
+     +1 Initiative upon enemy attack
+
+EOT
+    echo "$HR"
+}
+
+GX_Item5() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                             Flask of terrible odour
+
+     Under a steep rock wall you encounter a dragon pup's undiscovered carcass.
+     You notice that its rotten fumes curiously scare away all wildlife and
+     lowlife in the surrounding area.
+     You are intrigued and collect a sample of the liquid in a small flask that
+     you carry, to sprinkle on your body for your own protection.
+
+     +1 Chance of Enemy Flee
+
+EOT
+    echo "$HR"
+}
+GX_Item6() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                             Two-Handed Broadsword
+
+     From the thickest of forests you come upon and traverse a huge unmarked 
+     marsh and while crossing, you stumble upon trinkets, shards of weaponry
+     and old equipment destroyed by the wet. Suddenly you realize that you are
+     standing on the remains of a centuries old, long forgotten battlefield.
+
+     On the opposite side, you climb a mound only to find the wreckage of a
+     chariot, crashed on retreat, its knight pinned under one of its wheels.
+     You salvage a beautiful piece of craftmanship from the wreckage;
+     a powerful two-handed broadsword, untouched by time.
+		
+     +1 Strength
+	
+EOT
+    echo "$HR"
+}
+
+GX_Item7() {
+    clear
+    cat <<"EOT"
+                                  ITEM FOUND!
+                               Steady Hand Brew
+
+    Through the many years of travel you have found that your acquired taste
+     of a strong northlandic brew served cool keeps you on your toes.
+
+     +1 Accuracy and Initiative
+
+EOT
+    echo "$HR"
+}
+
+
+##########   FOR FUNCTIONS BLOCK (LICENSE)   ##########   
+
+PrepareLicense() { # gets license
+    # TODO add option to use wget if systen hasn't curl (Debian for instance)
+    echo "Download GNU GPL Version 3 ..."
+    GPL=$(curl -s "http://www.gnu.org/licenses/gpl-3.0.txt" || "")
+    echo "Download CC BY-NC-SA 4.0 ..."
+    if [[ $GPL ]] ; then 
+	echo -e "\t\t   BACK IN A MINUTE BASH CODE LICENSE:\t\t\t(Q)uit\n
+$HR
+$GPL"  > "$GAMEDIR/LICENSE"
+	echo "Licens downloaded!"
+	sleep 1
+	return 0
+    else
+	echo "Can't download licenses :( Do you have Internet access?"
+	sleep 1
+	return 1
+    fi
+}
+License() { # Used in Credits()
+    # Displays license if present or runs PrepareLicense && then display it..
+    clear
+    if [ -f "$GAMEDIR/LICENSE" ]; then
+	"$PAGER" "$GAMEDIR/LICENSE" # Some like "more" than "less" (as pager) :)
+    else
+	echo "License file currently missing in $GAMEDIR/ !"
+	echo -n "To DL licenses, about 60kB, type YES (requires internet access): " 
+	read "DL_LICENSE_OPT"
+	case "$DL_LICENSE_OPT" in
+	    YES ) 
+		PrepareLicense && "$PAGER" "$GAMEDIR/LICENSE" ;;
+	    * ) 
+		echo -e "
+Code License:\t<http://www.gnu.org/licenses/gpl-3.0.txt>
+More info:\t<${WEBURL}about#license>
+Press any key to go back to main menu!";
+		read -sn 1;;
+	esac
+    fi
+}   # Return to Credits() 
+
+
+##########   FOR RUNTIME BLOCK (LICENSE)   ##########   
+# Parse CLI arguments if any # TODO use getopts ?
+case "$1" in
+    --announce )
+	Announce ;;
+    --h | --help )
+	echo "Run the game BACK IN A MINUTE with '--play' or 'p' arguments to play!"
+	echo "For usage: run biamin --usage"
+	echo "Current dir for game files: $GAMEDIR/"
+	echo "Change at runtime or on line 10 in the CONFIGURATION of the script."
+	echo "You are currently running the NON-ASCII (GPL-only) version."
+	exit 0;;
+    --i | --install )
+	CreateBiaminLauncher ;
+	exit 0;;
+    --map )
+	read -n1 -p "Create custom map template? [Y/N] " CUSTOM_MAP_PROMPT
+	if [ "$CUSTOM_MAP_PROMPT" = "y" ] || [ "$CUSTOM_MAP_PROMPT" = "Y" ]; then
+	    echo "Creating custom map template.."
+	    MapCreateCustom
+	else
+	    echo "Not doing anything! Quitting.."
+	fi
+	exit 0 ;;
+    --play | -p | p )
+	echo "Launching Back in a Minute.." ;;
+    --v | --version )
+	echo -e "BACK IN A MINUTE VERSION $VERSION Copyright (C) 2014 Sigg3.net\n"
+	echo "Game SHELL CODE released under GNU GPL version 3 (GPLv3)."
+	echo "This is free software: you are free to change and redistribute it."
+	echo "There is NO WARRANTY, to the extent permitted by law."
+	echo -e "For details see: <http://www.gnu.org/licenses/gpl-3.0>\n"
+	echo "You are currently running the NON-ASCII (GPL-ONLY) version."
+	echo "Game created by Sigg3. Submit bugs & feedback at <$WEBURL>"
+	exit 0 ;;
+    --usage | * )
+	echo "Usage: biamin or ./biamin.sh"
+	echo "  (NO ARGUMENTS)      display this usage text and exit"
+	echo "  --play or p         PLAY the game \"Back in a minute\""
+	echo "  --announce          DISPLAY an adventure summary for social media and exit"
+	echo "  --install           ADD biamin.sh to your .bashrc file"
+	echo "  --map               CREATE custom map template with instructions and exit"
+	echo "  --help              display help text and exit"
+	echo "  --usage             display this usage text and exit"
+	echo "  --version           display version and licensing info and exit"
+	exit 0;;
+esac
