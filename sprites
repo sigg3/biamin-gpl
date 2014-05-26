@@ -6,17 +6,23 @@
 ##########   FOR UPPER BLOCK   ##########   
 # Back In A Minute GPL ONLY by Sigg3.net (C) 2014
 # Code is GNU GPLv3
-VERSION="1.3.7 non-ASCII" 
+VERSION="1.3.7.9 non-ASCII" 
 
 
 ##########   FOR THE GFX BLOCK   ##########   
 # Horizontal ruler used almost everywhere in the game
 HR="- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ "
 
+GX_BiaminTitle() { # Used in GX_Banner(), GX_Credits(), GX_HowTo(), GX_HighScore, GX_LoadGame, GX_Charsheet, License()
+	cat <<"EOT"
+                       B A C K   I N   A   M I N U T E
+EOT
+}  
+
 GX_Banner() {
     clear
+    GX_BiaminTitle
     cat <<"EOT"
-                       B A C K   I N   A   M I N U T E
                        
                               NON-ASCII VERSION
 
@@ -30,8 +36,8 @@ EOT
 
 GX_Credits() {
     clear
+    GX_BiaminTitle
     cat <<"EOT"
-                       B A C K   I N   A   M I N U T E
                         
    Back in a minute is an adventure game with 4 playable races, 6 enemies,
    8 items and 6 scenarios spread across the 270 sections of the world map.
@@ -55,8 +61,8 @@ EOT
 
 GX_HowTo() {
     clear
+    GX_BiaminTitle
     cat <<"EOT"
-                       B A C K   I N   A   M I N U T E
                                  HOW TO PLAY
 
    Go to Main Menu and hit (P)lay and enter the NAME of the character you want
@@ -79,8 +85,8 @@ EOT
 
 GX_HighScore() {
     clear
+    GX_BiaminTitle
     cat <<"EOT"
-                       B A C K   I N   A   M I N U T E
                                  HIGHSCORE
 EOT
     echo "$HR"
@@ -88,8 +94,8 @@ EOT
 
 GX_LoadGame() {
     clear
+    GX_BiaminTitle
     cat << "EOT"
-                       B A C K   I N   A   M I N U T E
                                  LOAD GAME
 EOT
     echo "$HR"
@@ -97,8 +103,8 @@ EOT
 
 GX_CharSheet() {
     clear
+    GX_BiaminTitle
     cat <<"EOT"
-                       B A C K   I N   A   M I N U T E
                                CHARACTER SHEET
 EOT
     echo "$HR"
@@ -451,36 +457,52 @@ EOT
 
 ##########   FOR FUNCTIONS BLOCK (LICENSE)   ##########   
 
-PrepareLicense() { # gets license
-    # TODO add option to use wget if systen hasn't curl (Debian for instance)
-    echo "Download GNU GPL Version 3 ..."
-    GPL=$(curl -s "http://www.gnu.org/licenses/gpl-3.0.txt" || "")
-    echo "Download CC BY-NC-SA 4.0 ..."
+PrepareLicense() { # gets license and mv to "LICENSE" in $GAMEDIR
+    # TODO add option to use wget if systen hasn't curl (Debian for instance) -kstn
+    # TODO I'm not sure. I was told to use curl because it has greater compatibility than wget..? - s3
+    echo " Downloading GNU GPL Version 3 ..."
+    GPL=$(curl -s "http://www.gnu.org/licenses/gpl-3.0.txt" || "") # I didn't know we could do that :)
     if [[ $GPL ]] ; then 
 	echo -e "\t\t   BACK IN A MINUTE BASH CODE LICENSE:\t\t\t(Q)uit\n
 $HR
 $GPL"  > "$GAMEDIR/LICENSE"
-	echo "Licens downloaded!"
+	echo " License downloaded successfully!"
 	sleep 1
 	return 0
     else
-	echo "Can't download licenses :( Do you have Internet access?"
+	echo "Couldn't download license file :( Do you have Internet access?"
 	sleep 1
 	return 1
     fi
 }
+
+ShowLicense() { # Used in License()
+	case "$PAGER" in
+		0 ) echo -en "\n License file available at $GAMEDIR/LICENSE\n Press any key to continue...  " && read -sn 1 ;;
+		* ) "$PAGER" "$GAMEDIR/LICENSE" ;;
+	esac
+}
 License() { # Used in Credits()
     # Displays license if present or runs PrepareLicense && then display it..
     clear
-    if [ -f "$GAMEDIR/LICENSE" ]; then
-	less "$GAMEDIR/LICENSE"
-    else
-	echo "License file currently missing in $GAMEDIR/ !"
-	echo -n "To DL licenses, about 60kB, type YES (requires internet access): " 
-	read "DL_LICENSE_OPT"
+    GX_BiaminTitle
+	if [ -z "$PAGER" ] ; then				# If $PAGER is not set
+		if [ -f "/usr/bin/less" ] ; then
+			local PAGER="/usr/bin/less"		# try less
+		elif [ -f "/usr/bin/more" ] ; then
+			local PAGER="/usr/bin/more"		# or try more
+		else
+			local PAGER="0"		# or fallback gracefully (see ShowLicense in case PAGER is 0)
+		fi
+	fi
+	if [ -f "$GAMEDIR/LICENSE" ]; then
+		ShowLicense
+	else
+	echo -e "\n License file currently missing in $GAMEDIR/ !"
+	read -p " To DL license, less than 50kB, type YES (requires internet access): " "DL_LICENSE_OPT"
 	case "$DL_LICENSE_OPT" in
 	    YES ) 
-		PrepareLicense && less "$GAMEDIR/LICENSE" ;;
+		PrepareLicense && ShowLicense ;;
 	    * ) 
 		echo -e "
 Code License:\t<http://www.gnu.org/licenses/gpl-3.0.txt>
@@ -490,6 +512,7 @@ Press any key to go back to main menu!";
 	esac
     fi
 }   # Return to Credits() 
+
 
 
 ##########   FOR RUNTIME BLOCK (LICENSE)   ##########   
