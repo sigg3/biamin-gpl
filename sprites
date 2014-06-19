@@ -6,7 +6,7 @@
 ##########   FOR UPPER BLOCK   ##########   
 # Back In A Minute GPL ONLY by Sigg3.net (C) 2014
 # Code is GNU GPLv3
-VERSION="1.3.7.9 non-ASCII" 
+VERSION="1.4 non-ASCII" 
 
 
 ##########   FOR THE GFX BLOCK   ##########   
@@ -14,13 +14,13 @@ VERSION="1.3.7.9 non-ASCII"
 HR="- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ "
 
 GX_BiaminTitle() { # Used in GX_Banner(), GX_Credits(), GX_HowTo(), GX_HighScore, GX_LoadGame, GX_Charsheet, License()
+	clear
 	cat <<"EOT"
                        B A C K   I N   A   M I N U T E
 EOT
 }  
 
 GX_Banner() {
-    clear
     GX_BiaminTitle
     cat <<"EOT"
                        
@@ -35,7 +35,6 @@ EOT
 }
 
 GX_Credits() {
-    clear
     GX_BiaminTitle
     cat <<"EOT"
                         
@@ -60,7 +59,6 @@ EOT
 }
 
 GX_HowTo() {
-    clear
     GX_BiaminTitle
     cat <<"EOT"
                                  HOW TO PLAY
@@ -458,11 +456,14 @@ EOT
 ##########   FOR FUNCTIONS BLOCK (LICENSE)   ##########   
 
 PrepareLicense() { # gets license and mv to "LICENSE" in $GAMEDIR
-    # TODO add option to use wget if systen hasn't curl (Debian for instance) -kstn
-    # TODO I'm not sure. I was told to use curl because it has greater compatibility than wget..? - s3
-    echo " Downloading GNU GPL Version 3 ..."
-    GPL=$(curl -s "http://www.gnu.org/licenses/gpl-3.0.txt" || "") # I didn't know we could do that :)
-    if [[ $GPL ]] ; then 
+	echo " Downloading GNU GPL Version 3 ..."
+    if [[ $(which wget 2>/dev/null) ]]; then # Try wget first
+	wget -q -O gpl-3.0.txt "http://www.gnu.org/licenses/gpl-3.0.txt"
+	GPL=$(cat gpl-3.0.txt)
+	elif [[ $(which curl 2>/dev/null) ]]; then # If no wget try curl
+	GPL=$(curl -s "http://www.gnu.org/licenses/gpl-3.0.txt" || "")
+	fi
+	if [[ $GPL ]] ; then 
 	echo -e "\t\t   BACK IN A MINUTE BASH CODE LICENSE:\t\t\t(Q)uit\n
 $HR
 $GPL"  > "$GAMEDIR/LICENSE"
@@ -560,3 +561,59 @@ case "$1" in
 	echo "  -v --version        display version and licensing info and exit"
 	exit 0;;
 esac
+
+	--update ) # Updater for GPL-Only
+	REPO_SRC="https://gitorious.org/back-in-a-minute/gpl-only/raw/biamin.sh"
+	GX_BiaminTitle;
+	echo "Retrieving $REPO_SRC .." | sed 's/https:\/\///g'
+	REPO=$( mktemp $GAMEDIR/repo.XXXXXX ) 
+	if [[ $(which wget 2>/dev/null) ]]; then # Try wget, automatic redirect
+	    wget -q -O "$REPO" "$REPO_SRC" || Die DOWNLOAD_ERR__No_internet_with_wget
+	elif [[ $(which curl 2>/dev/null) ]]; then # Try curl, -L - for redirect
+	    curl -s -L -o "$REPO" "$REPO_SRC" || Die  DOWNLOAD_ERR__No_internet_with_curl
+	else
+	    Die DOWNLOAD_ERR__No_curl_or_wget_available
+	fi
+
+	REPOVERSION=$( sed -n -r '/^VERSION=/s/^VERSION="([^"]*)".*$/\1/p' "$REPO" )
+	echo "Your current Back in a Minute game is version $VERSION"
+
+	# Compare versions $1 and $2. Versions should be [0-9]+.[0-9]+.[0-9]+. ...
+	# Return 0 if $1 == $2, 1 if $1 > than $2, 2 if $2 < than $1
+	if [[ "$VERSION" == "$REPOVERSION" ]] ; then
+	    RETVAL=0  
+	else
+	    IFS="\." read -a VER1 <<< "$VERSION"
+	    IFS="\." read -a VER2 <<< "$REPOVERSION"
+	    for ((i=0; ; i++)); do # until break
+		[[ ! "${VER1[$i]}" ]] && { RETVAL=2; break; }
+		[[ ! "${VER2[$i]}" ]] && { RETVAL=1; break; }
+		(( ${VER1[$i]} > ${VER2[$i]} )) && { RETVAL=1; break; }
+		(( ${VER1[$i]} < ${VER2[$i]} )) && { RETVAL=2; break; }
+	    done
+	    unset VER1 VER2
+	fi
+	case "$RETVAL" in
+	    0)  echo "This is the latest version ($VERSION) of Back in a Minute!" ; rm -f "$REPO";;
+	    1)  echo "Your version ($VERSION) is newer than $REPOVERSION" ; rm -f "$REPO";;
+	    2)  echo "Newer version $REPOVERSION is available!"
+		echo "Updating will NOT destroy character sheets, highscore or current config."
+ 		read -sn1 -p "Update to Biamin version $REPOVERSION? [Y/N] " CONFIRMUPDATE
+		case "$CONFIRMUPDATE" in
+		    y | Y ) echo -e "\nUpdating Back in a Minute from $VERSION to $REPOVERSION .."
+			# TODO make it less ugly
+			BIAMIN_RUNTIME=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ) # TODO $0 is a powerful beast, but will sometimes fail.
+			BIAMIN_RUNTIME+="/"
+			BIAMIN_RUNTIME+=$( basename "${BASH_SOURCE[0]}")
+			mv "$BIAMIN_RUNTIME" "${BIAMIN_RUNTIME}.bak" # backup current file
+			mv "$REPO" "$BIAMIN_RUNTIME"
+			chmod +x "$BIAMIN_RUNTIME" || Die PERMISSION__Couldnt_make_biamin_executable
+			echo "Run 'sh $BIAMIN_RUNTIME --install' to add launcher!" 
+			echo "Current file moved to ${BIAMIN_RUNTIME}.bak"
+			;;
+		    * ) echo -e "\nNot updating! Removing temporary file .."; rm -f "$REPO" ;;
+		esac
+		;;
+	esac
+	echo "Done. Thanks for playing :)"
+	exit 0;;
